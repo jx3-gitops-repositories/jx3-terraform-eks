@@ -88,7 +88,9 @@ and create or import your applications
 jx project
 ```
 
-#### Inputs
+## Terraform Inputs
+
+You can modify the following terraform inputs in `main.tf`:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
