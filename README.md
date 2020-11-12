@@ -90,7 +90,9 @@ jx project
 
 ## Terraform Inputs
 
-You can modify the following terraform inputs in `main.tf`:
+You can modify the following terraform inputs in `main.tf`. 
+
+For the full list of terraform inputs [see the documentation for jenkins-x/terraform-aws-eks-jx](https://github.com/jenkins-x/terraform-aws-eks-jx#inputs)
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
