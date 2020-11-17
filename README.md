@@ -46,7 +46,7 @@ __Note: remember to create the Git repositories below in your Git Organisation r
 2. Create a **Cluster** git repository from this template https://github.com/jx3-gitops-repositories/jx3-eks-vault/generate
 3. Override the variable defaults in the **Infrastructure** repository. (E.g, edit `variables.tf`, set `TF_VAR_` environment variables, or pass the values on the terraform command line.)
  * `region`: AWS region code for the AWS region to create the cluster in.
- * `jx_git_url`: URL of the **Cluster** repository (including the ".git" in the end).
+ * `jx_git_url`: URL of the **Cluster** repository.
  * `jx_bot_username`: The username of the git bot user
 4. commit and push any changes to your **Infrastructure** git repository:
 
