@@ -131,7 +131,10 @@ For the full list of terraform inputs [see the documentation for jenkins-x/terra
 
 # Cleanup
 
-To remove any cloud resources created here run:
+To remove any cloud resources created here:
+
+* Manually remove the generated load balancer, for example, through the AWS EC2 console "Load Balancers" tab. The load balancer is currently not cleaned up automatically and may cause the following destroy step to hang and finally fail.
+* Run:
 ```sh
 terraform destroy
 ```
