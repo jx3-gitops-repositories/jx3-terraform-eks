@@ -1,6 +1,11 @@
 // ----------------------------------------------------------------------------
 // Optional Variables
 // ----------------------------------------------------------------------------
+variable "region" {
+  description = "AWS region code for creating resources."
+  type = string
+}
+
 variable "cluster_version" {
   description = "Kubernetes version to use for the EKS cluster."
   type        = string

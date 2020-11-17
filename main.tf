@@ -2,6 +2,7 @@ module "eks-jx" {
   source          = "jenkins-x/eks-jx/aws"
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
+  region          = var.region 
   vault_user      = var.vault_user
   is_jx2          = false
   jx_git_url      = var.jx_git_url
