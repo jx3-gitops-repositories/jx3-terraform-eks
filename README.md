@@ -88,6 +88,8 @@ and create or import your applications
 jx project
 ```
 
+If your application is not yet in a git repository, you are asked for a github.com user and token to push the application to git. This user needs administrative permissions to create repository and hooks. It is likely not the same user as the bot user mentioned above.
+
 ## Terraform Inputs
 
 You can modify the following terraform inputs in `main.tf`. 
