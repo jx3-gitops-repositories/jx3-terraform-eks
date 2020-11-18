@@ -44,7 +44,10 @@ __Note: remember to create the Git repositories below in your Git Organisation r
 
 1. Create and clone your **Infrastructure** git repository from this GitHub Template https://github.com/jx3-gitops-repositories/jx3-terraform-eks/generate
 2. Create a **Cluster** git repository from this template https://github.com/jx3-gitops-repositories/jx3-eks-vault/generate
-3. You need to configure the git URL of your **Cluster** git repository into the **Infrastructure** git repository.
+3. Override the variable defaults in the **Infrastructure** repository. (E.g, edit `variables.tf`, set `TF_VAR_` environment variables, or pass the values on the terraform command line.)
+ * `region`: AWS region code for the AWS region to create the cluster in.
+ * `jx_git_url`: URL of the **Cluster** repository.
+ * `jx_bot_username`: The username of the git bot user
 4. commit and push any changes to your **Infrastructure** git repository:
 
 ```sh
@@ -52,10 +55,9 @@ git commit -a -m "fix: configure cluster repository and project"
 git push
 ```
 
-5. Now define 2 environment variables to pass the bot user and token into Terraform:
+5. Define an environment variable to pass the bot token into Terraform:
 
 ```sh
-export TF_VAR_jx_bot_username=my-bot-username
 export TF_VAR_jx_bot_token=my-bot-token
 ```
 
@@ -96,6 +98,7 @@ For the full list of terraform inputs [see the documentation for jenkins-x/terra
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| region | AWS region code for creating resources | `string` | n/a | yes |
 | cluster\_name | Name of the Kubernetes cluster to create | `string` | `""` | no |
 | cluster\_version | Kubernetes version to use for the EKS cluster. | `string` | `"1.17"` | no |
 | force\_destroy | Flag to determine whether storage buckets get forcefully destroyed. If set to false, empty the bucket first in the aws s3 console, else terraform destroy will fail with BucketNotEmpty error | `bool` | `false` | no |
