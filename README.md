@@ -45,6 +45,7 @@ __Note: remember to create the Git repositories below in your Git Organisation r
 1. Create and clone your **Infrastructure** git repository from this GitHub Template https://github.com/jx3-gitops-repositories/jx3-terraform-eks/generate
 2. Create a **Cluster** git repository from this template https://github.com/jx3-gitops-repositories/jx3-eks-vault/generate
 3. Override the variable defaults in the **Infrastructure** repository. (E.g, edit `variables.tf`, set `TF_VAR_` environment variables, or pass the values on the terraform command line.)
+ * `cluster_version`: Kubernetes version for the EKS cluster.
  * `region`: AWS region code for the AWS region to create the cluster in.
  * `jx_git_url`: URL of the **Cluster** repository.
  * `jx_bot_username`: The username of the git bot user
@@ -94,20 +95,23 @@ If your application is not yet in a git repository, you are asked for a github.c
 
 ## Terraform Inputs
 
-You can modify the following terraform inputs in `main.tf`. 
+You can modify the following terraform inputs in `main.tf`.
 
 For the full list of terraform inputs [see the documentation for jenkins-x/terraform-aws-eks-jx](https://github.com/jenkins-x/terraform-aws-eks-jx#inputs)
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| region | AWS region code for creating resources | `string` | n/a | yes |
 | cluster\_name | Name of the Kubernetes cluster to create | `string` | `""` | no |
-| cluster\_version | Kubernetes version to use for the EKS cluster. | `string` | `"1.17"` | no |
+| cluster\_version | Kubernetes version to use for the EKS cluster. | `string` | n/a | yes |
 | force\_destroy | Flag to determine whether storage buckets get forcefully destroyed. If set to false, empty the bucket first in the aws s3 console, else terraform destroy will fail with BucketNotEmpty error | `bool` | `false` | no |
+| install\_kuberhealthy | Flag to specify if kuberhealthy operator should be installed | `bool` | `true` | no |
 | is\_jx2 | Flag to specify if jx2 related resources need to be created | `bool` | `false` | no |
 | jx\_bot\_token | Bot token used to interact with the Jenkins X cluster git repository | `string` | n/a | yes |
 | jx\_bot\_username | Bot username used to interact with the Jenkins X cluster git repository | `string` | n/a | yes |
 | jx\_git\_url | URL for the Jenins X cluster git repository | `string` | n/a | yes |
+| nginx\_chart\_version | nginx chart version | `string` | `"3.12.0"` | no |
+| profile | Profile stored in aws config or credentials file | `string` | n/a | yes |
+| region | AWS region code for creating resources. | `string` | n/a | yes |
 | vault\_user | The AWS IAM Username whose credentials will be used to authenticate the Vault pods against AWS | `string` | `""` | no |
 
 #### Outputs
@@ -146,7 +150,7 @@ terraform destroy
 
 # Contributing
 
-When adding new variables please regenerate the markdown table 
+When adding new variables please regenerate the markdown table
 ```sh
 terraform-docs markdown table .
 ```
