@@ -26,6 +26,7 @@ This requires two git Repositories to achieve this:
   Add the new `bot` user to your Git Organisation, for now give it Owner permissions, we will reduce this to member permissions soon.
 - Install `terraform` CLI - [see here](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform)
 - Install `jx` CLI - [see here](https://github.com/jenkins-x/jx-cli/releases)
+- For AWS SSO ensure you have installed `AWSCLI version 2` - [see here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html). You must then configure it to use Named Profiles - [see here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 
 # Git repositories
 
