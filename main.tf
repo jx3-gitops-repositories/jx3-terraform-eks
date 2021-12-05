@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "eks-jx" {
-  source               = "jenkins-x/eks-jx/aws?ref=v1.18.2"
+  source               = "jenkins-x/eks-jx/aws?ref=v1.15.12"
   cluster_version      = var.cluster_version
   region               = var.region
   vault_user           = var.vault_user
