@@ -43,7 +43,7 @@ output "lts_reports_bucket" {
 }
 
 output "lts_repository_bucket" {
-  value       = module.eks-jx.lts_reports_bucket
+  value       = module.eks-jx.lts_repository_bucket
   description = "The bucket that will serve as artifacts repository"
 }
 
