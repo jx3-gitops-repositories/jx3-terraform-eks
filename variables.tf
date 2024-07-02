@@ -16,12 +16,6 @@ variable "cluster_version" {
   type        = string
 }
 
-variable "vault_user" {
-  description = "The AWS IAM Username whose credentials will be used to authenticate the Vault pods against AWS"
-  type        = string
-  default     = ""
-}
-
 variable "cluster_name" {
   description = "Name of the Kubernetes cluster to create"
   type        = string
@@ -32,12 +26,6 @@ variable "force_destroy" {
   description = "Flag to determine whether storage buckets get forcefully destroyed. If set to false, empty the bucket first in the aws s3 console, else terraform destroy will fail with BucketNotEmpty error"
   type        = bool
   default     = false
-}
-
-variable "is_jx2" {
-  default     = false
-  type        = bool
-  description = "Flag to specify if jx2 related resources need to be created"
 }
 
 variable "jx_git_url" {
