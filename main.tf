@@ -16,22 +16,6 @@ provider "aws" {
   region  = var.region
 }
 
-data "aws_availability_zones" "available" {}
-
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
-
 // This will create a vpc using the official vpc module
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
@@ -73,8 +57,8 @@ module "eks" {
   eks_managed_node_groups = {
     eks-jx-node-group = {
       ami_type     = var.ami_type
-      desired_size = 2
-      min_size     = 1
+      desired_size = 3
+      min_size     = 2
       max_size     = 5
 
       instance_types = [var.node_machine_type]
@@ -83,15 +67,8 @@ module "eks" {
         "jenkins-x.io/part-of"    = "jx-platform"
         "jenkins-x.io/managed-by" = "terraform"
       }
-      additional_tags = {
-        aws_managed = "true"
-      }
     }
   }
-
-  # Cluster access entry
-  # To add the current caller identity as an administrator
-  enable_cluster_creator_admin_permissions = true
 
   cluster_addons = {
     coredns                = {}
@@ -99,6 +76,9 @@ module "eks" {
     kube-proxy             = {}
     vpc-cni                = {}
   }
+
+  cluster_endpoint_private_access = var.cluster_endpoint_private_access
+  cluster_endpoint_public_access  = var.cluster_endpoint_public_access
 }
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
