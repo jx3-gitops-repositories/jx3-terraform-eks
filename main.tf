@@ -1,3 +1,17 @@
+resource "random_pet" "current" {
+  prefix    = "tf-jx"
+  separator = "-"
+  keepers = {
+    # Keep the name consistent on executions
+    cluster_name = var.cluster_name
+  }
+}
+
+
+locals {
+  cluster_name      = var.cluster_name != "" ? var.cluster_name : random_pet.current.id
+}
+
 data "aws_availability_zones" "available" {}
 
 data "aws_eks_cluster" "cluster" {
@@ -28,16 +42,16 @@ module "vpc" {
   single_nat_gateway   = var.single_nat_gateway
 
   tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"           = "1"
   }
 }
@@ -46,7 +60,7 @@ module "vpc" {
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "20.20.0"
-  cluster_name    = var.cluster_name
+  cluster_name    = local.cluster_name
   cluster_version = var.cluster_version
   subnet_ids      = (var.cluster_in_private_subnet ? module.vpc.private_subnets : module.vpc.public_subnets)
   vpc_id          = module.vpc.vpc_id
@@ -61,7 +75,7 @@ module "eks" {
 
       instance_types = [var.node_machine_type]
       k8s_labels = {
-        "jenkins-x.io/name"       = var.cluster_name
+        "jenkins-x.io/name"       = local.cluster_name
         "jenkins-x.io/part-of"    = "jx-platform"
         "jenkins-x.io/managed-by" = "terraform"
       }
