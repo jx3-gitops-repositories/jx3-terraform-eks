@@ -1,9 +1,4 @@
 // Storage (backup, logs, reports, repo)
-output "backup_bucket_url" {
-  value       = module.eks-jx.backup_bucket_url
-  description = "The bucket where backups from velero will be stored"
-}
-
 output "lts_logs_bucket" {
   value       = module.eks-jx.lts_logs_bucket
   description = "The bucket where logs from builds will be stored"
