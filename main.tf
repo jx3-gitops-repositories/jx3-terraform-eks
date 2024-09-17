@@ -16,6 +16,8 @@ provider "aws" {
   region  = var.region
 }
 
+data "aws_availability_zones" "available" {}
+
 // This will create a vpc using the official vpc module
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
@@ -83,7 +85,7 @@ module "eks" {
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
 module "eks-jx" {
-  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v3.0.0"
+  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v3.0.1"
   region = var.region
 
   use_asm         = var.use_asm
