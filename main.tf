@@ -83,7 +83,7 @@ module "eks" {
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
 module "eks-jx" {
-  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v2.0.2"
+  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v3.0.0"
   region = var.region
 
   use_asm         = var.use_asm
