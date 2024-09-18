@@ -9,11 +9,11 @@ resource "random_pet" "current" {
 
 
 locals {
-  cluster_name      = var.cluster_name != "" ? var.cluster_name : random_pet.current.id
+  cluster_name = var.cluster_name != "" ? var.cluster_name : random_pet.current.id
 }
 
 provider "aws" {
-  region  = var.region
+  region = var.region
 }
 
 data "aws_availability_zones" "available" {}
@@ -37,12 +37,12 @@ module "vpc" {
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/role/elb"                      = "1"
   }
 
   private_subnet_tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/role/internal-elb"             = "1"
   }
 }
 
@@ -55,6 +55,10 @@ module "eks" {
   subnet_ids      = (var.cluster_in_private_subnet ? module.vpc.private_subnets : module.vpc.public_subnets)
   vpc_id          = module.vpc.vpc_id
   enable_irsa     = true
+
+  # Cluster access entry
+  # To add the current caller identity as an administrator
+  enable_cluster_creator_admin_permissions = true
 
   eks_managed_node_groups = {
     eks-jx-node-group = {
@@ -81,6 +85,34 @@ module "eks" {
 
   cluster_endpoint_private_access = var.cluster_endpoint_private_access
   cluster_endpoint_public_access  = var.cluster_endpoint_public_access
+}
+
+module "iam-assumable-role-ebs-csi" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "~> v3.8.0"
+  create_role                   = true
+  role_name                     = "${module.eks.cluster_name}-ebs-csi"
+  provider_url                  = module.eks.cluster_oidc_issuer_url
+  role_policy_arns              = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:ebs-csi-controller-sa"]
+}
+
+data "aws_eks_addon_version" "ebs-csi" {
+  addon_name         = "aws-ebs-csi-driver"
+  kubernetes_version = module.eks.cluster_version
+  most_recent        = false
+}
+
+resource "aws_eks_addon" "ebs-csi" {
+  cluster_name             = module.eks.cluster_name
+  addon_name               = "aws-ebs-csi-driver"
+  service_account_role_arn = module.iam-assumable-role-ebs-csi.this_iam_role_arn
+  addon_version            = data.aws_eks_addon_version.ebs-csi.version
+  configuration_values = jsonencode({
+    defaultStorageClass = {
+      enabled = true
+    }
+  })
 }
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
