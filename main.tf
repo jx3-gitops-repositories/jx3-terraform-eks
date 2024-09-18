@@ -113,6 +113,8 @@ resource "aws_eks_addon" "ebs-csi" {
       enabled = true
     }
   })
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
 }
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
