@@ -1,13 +1,9 @@
 // ----------------------------------------------------------------------------
-// Optional Variables
+// Required Variables
 // ----------------------------------------------------------------------------
+
 variable "region" {
   description = "AWS region code for creating resources."
-  type        = string
-}
-
-variable "profile" {
-  description = "Profile stored in aws config or credentials file"
   type        = string
 }
 
@@ -16,11 +12,32 @@ variable "cluster_version" {
   type        = string
 }
 
+
+variable "jx_git_url" {
+  description = "URL for the Jenins X cluster git repository"
+  type        = string
+}
+
+variable "jx_bot_username" {
+  description = "Bot username used to interact with the Jenkins X cluster git repository"
+  type        = string
+}
+
+variable "jx_bot_token" {
+  description = "Bot token used to interact with the Jenkins X cluster git repository"
+  type        = string
+}
+
+// ----------------------------------------------------------------------------
+// Optional Variables
+// ----------------------------------------------------------------------------
+
 variable "cluster_name" {
   description = "Name of the Kubernetes cluster to create"
   type        = string
   default     = ""
 }
+
 variable "ami_type" {
   description = "ami type for the node group worker intances"
   type        = string
@@ -36,21 +53,6 @@ variable "force_destroy" {
   description = "Flag to determine whether storage buckets get forcefully destroyed. If set to false, empty the bucket first in the aws s3 console, else terraform destroy will fail with BucketNotEmpty error"
   type        = bool
   default     = false
-}
-
-variable "jx_git_url" {
-  description = "URL for the Jenins X cluster git repository"
-  type        = string
-}
-
-variable "jx_bot_username" {
-  description = "Bot username used to interact with the Jenkins X cluster git repository"
-  type        = string
-}
-
-variable "jx_bot_token" {
-  description = "Bot token used to interact with the Jenkins X cluster git repository"
-  type        = string
 }
 
 variable "nginx_chart_version" {
