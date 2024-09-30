@@ -119,7 +119,7 @@ resource "aws_eks_addon" "ebs-csi" {
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
 module "eks-jx" {
-  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v3.0.1"
+  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v3.0.2"
   region = var.region
 
   use_asm         = var.use_asm
