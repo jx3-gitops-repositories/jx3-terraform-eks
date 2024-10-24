@@ -47,12 +47,12 @@ output "cluster_autoscaler_iam_role" {
 
 // Cluster specific output
 output "cluster_name" {
-  value       = module.eks-jx.cluster_name
+  value       = module.eks.cluster_name
   description = "The name of the created cluster"
 }
 
 output "cluster_oidc_issuer_url" {
-  value       = module.eks-jx.cluster_oidc_issuer_url
+  value       = module.eks.cluster_oidc_issuer_url
   description = "The Cluster OIDC Issuer URL"
 }
 

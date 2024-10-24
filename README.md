@@ -104,14 +104,14 @@ For the full list of terraform inputs in the eks-jx module se [see the documenta
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.6.2 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.73.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.6.3 |
 ### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_eks"></a> [eks](#module\_eks) | terraform-aws-modules/eks/aws | 20.20.0 |
-| <a name="module_eks-jx"></a> [eks-jx](#module\_eks-jx) | github.com/jenkins-x/terraform-aws-eks-jx | v3.0.1 |
+| <a name="module_eks-jx"></a> [eks-jx](#module\_eks-jx) | github.com/jenkins-x/terraform-aws-eks-jx | v4.0.0 |
 | <a name="module_iam-assumable-role-ebs-csi"></a> [iam-assumable-role-ebs-csi](#module\_iam-assumable-role-ebs-csi) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | ~> v3.8.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 5.9.0 |
 ### Inputs
