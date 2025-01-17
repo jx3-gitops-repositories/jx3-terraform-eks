@@ -66,3 +66,8 @@ output "docs" {
   description = "Follow Jenkins X 3.x alpha docs for more information"
   value       = "https://jenkins-x.io/docs/v3/"
 }
+
+output "connect" {
+  description = "The command to run to connect to the EKS cluster"
+  value       = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region=${var.region}"
+}
