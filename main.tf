@@ -144,7 +144,7 @@ provider "kubernetes" {
 
 // The VPC and EKS resources have been created, just install the cloud resources required by jx
 module "eks-jx" {
-  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v4.1.4"
+  source = "github.com/jenkins-x/terraform-aws-eks-jx?ref=v4.1.5"
   region = var.region
 
   use_asm         = var.use_asm
