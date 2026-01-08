@@ -49,7 +49,7 @@ module "vpc" {
 // This will create the eks cluster using the official eks module
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.20.0"
+  version         = "20.37.2"
   cluster_name    = local.cluster_name
   cluster_version = var.cluster_version
   subnet_ids      = (var.cluster_in_private_subnet ? module.vpc.private_subnets : module.vpc.public_subnets)
